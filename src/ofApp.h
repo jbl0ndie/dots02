@@ -27,11 +27,14 @@ public:
     int width, height, halfWidth, halfHeight;
     float diameter;
     
+    float stretchFactor; // a factor to enlarge the fbo beyond the window size
     float circleRadius; // radius of dots
     int numberOfCircles; // number of dots
     int circleArray[200][200]; // ?
     float rotationAngle; // angle of array rotation
     float rotationSpeed; // speed of rotation
+    float offsetX;
+    float offsetY;
     
     ofFbo backFbo; // declare an fbo for the background dots
     ofFbo frontFbo; // declare an fbo for the foreground dots

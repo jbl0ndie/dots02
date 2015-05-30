@@ -11,23 +11,27 @@ void ofApp::setup(){
     //Init a new layer / mask combo
     masker.newLayer();
     
-    ofSetCircleResolution(60);
+    // initialise all the constants to avoid using literals as much as possible
+    stretchFactor = 1.5;
+    ofSetCircleResolution(30);
     circleRadius = 15;
-    numberOfCircles = 300;
+    numberOfCircles = 200;
     rotationAngle = 0.0;
-    rotationSpeed = 1.1;
+    rotationSpeed = 0.2;
+    offsetX = 5.8;
+    offsetY = 5.8;
 
-    // lets try drawing the dots in an fbo and seeing if we can call that in the draw method
+    // draw the dots in an fbo which we'll call later in the draw method
+    // nb the fbo needs to be bigger than the window to accommodate the rotation
+    // allocate the fbo with alpha, 8 bits rgb
+    backFbo.allocate(width * stretchFactor, height * stretchFactor, GL_RGBA);
 
-    backFbo.allocate(width, height, GL_RGBA); // allocate the fbo with alpha, 8 bits rgb
-
-    
     backFbo.begin(); // begin the fbo
         ofClear(0, 0, 0, 255); // clear it (good practice)
         
         ofSetColor(255, 255, 255, 255);
         for (int i = 0; i < numberOfCircles; i++) {
-            ofCircle(ofRandom(width - circleRadius), ofRandom(height - circleRadius), circleRadius);
+            ofCircle(ofRandom(width * stretchFactor), ofRandom(height * stretchFactor), circleRadius);
         }
     
     backFbo.end(); // end the fbo
@@ -35,7 +39,15 @@ void ofApp::setup(){
 
 void ofApp::update(){
    
-    rotationAngle += rotationSpeed;
+    // it's a bit cavalier to have this just increase for ever
+    // so reset it to zero after each rotation
+    rotationAngle += rotationSpeed; // increment the fbo's rotation angle based on the rotation speed
+    if (rotationAngle > (360 - rotationSpeed)) {
+        rotationAngle = 0;
+    }
+    
+    //    rotationAngle = ofGetMouseX(); // for rotation debug testing
+//    rotationAngle = 0;
 }
 
 void ofApp::draw(){
@@ -59,10 +71,11 @@ void ofApp::draw(){
     ofPushMatrix();
     {
         ofTranslate(width / 2, height / 2); // translate origin
-        ofRotate(rotationAngle, 0, 0, 1); // rotate about origin
-        backFbo.draw(0, 5); // draw the fbo again, with an offset
-            ofPushMatrix(); // reset the origin
-            ofTranslate(-width / 2, -height / 2);
+        ofRotate(rotationAngle, 0, 0, 1); // rotate about origin Z-axis
+//        ofRotate(180, 1, 0, 0); // flip the fbo so it never completely aligns
+            ofPushMatrix(); // drop down a level to reset the origin
+            ofTranslate(-width / 2, -height / 2); // reset the origin
+            backFbo.draw(0 + offsetX, 0 + offsetY); // draw the fbo again, with an offset
             ofPopMatrix();
     }
     ofPopMatrix();
