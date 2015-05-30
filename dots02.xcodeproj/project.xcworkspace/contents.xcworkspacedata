@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:layerMask.xcodeproj">
+      location = "self:dots02.xcodeproj">
    </FileRef>
 </Workspace>
