@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>0FC74B2F-35A0-4201-B3C3-9E512EB35ACD</string>
+	<key>IDESourceControlProjectName</key>
+	<string>example-simple</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>D7B37588BD493FB6C16572F25CA0740EC5EAFCA4</key>
+		<string>https://github.com/microcosm/ofxLayerMask.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>example-simple/example-simple.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>D7B37588BD493FB6C16572F25CA0740EC5EAFCA4</key>
+		<string>../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/microcosm/ofxLayerMask.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>D7B37588BD493FB6C16572F25CA0740EC5EAFCA4</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>D7B37588BD493FB6C16572F25CA0740EC5EAFCA4</string>
+			<key>IDESourceControlWCCName</key>
+			<string>ofxLayerMask</string>
+		</dict>
+	</array>
+</dict>
+</plist>
