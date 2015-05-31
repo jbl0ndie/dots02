@@ -13,7 +13,7 @@ void ofApp::setup(){
     
     // initialise all the constants to avoid using literals as much as possible
     stretchFactor = 1.5;
-    ofSetCircleResolution(30);
+    ofSetCircleResolution(60);
     circleRadius = 15;
     numberOfCircles = 200;
     rotationAngle = 0.0;
@@ -23,8 +23,8 @@ void ofApp::setup(){
 
     // draw the dots in an fbo which we'll call later in the draw method
     // nb the fbo needs to be bigger than the window to accommodate the rotation
-    // allocate the fbo with alpha, 8 bits rgb
-    backFbo.allocate(width * stretchFactor, height * stretchFactor, GL_RGBA);
+    // allocate the fbo with alpha, 8 bits rgb, 4 determines the glut anti-aliasing
+    backFbo.allocate(width * stretchFactor, height * stretchFactor, GL_RGBA,4);
 
     backFbo.begin(); // begin the fbo
         ofClear(0, 0, 0, 255); // clear it (good practice)
