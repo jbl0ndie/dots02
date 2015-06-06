@@ -38,5 +38,6 @@ public:
     
     ofFbo backFbo; // declare an fbo for the background dots
     ofFbo frontFbo; // declare an fbo for the foreground dots
+    ofImage testImage; // declare an image
 
 };

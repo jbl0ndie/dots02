@@ -2,6 +2,7 @@
 
 void ofApp::setup(){
     width = ofGetWindowWidth(); height = ofGetWindowHeight();
+
     halfWidth = width * 0.5;
     halfHeight = height * 0.5;
     
@@ -28,7 +29,7 @@ void ofApp::setup(){
 
     backFbo.begin(); // begin the fbo
         ofClear(0, 0, 0, 255); // clear it (good practice)
-        
+    
         ofSetColor(255, 255, 255, 255);
         for (int i = 0; i < numberOfCircles; i++) {
             ofCircle(ofRandom(width * stretchFactor), ofRandom(height * stretchFactor), circleRadius);
@@ -38,8 +39,7 @@ void ofApp::setup(){
 }
 
 void ofApp::update(){
-   
-    // it's a bit cavalier to have this just increase for ever
+   // it's a bit cavalier to have this just increase for ever
     // so reset it to zero after each rotation
     rotationAngle += rotationSpeed; // increment the fbo's rotation angle based on the rotation speed
     if (rotationAngle > (360 - rotationSpeed)) {
@@ -55,32 +55,54 @@ void ofApp::draw(){
     //Draw a background
     ofBackground(ofColor::black);
 
-    //Draw the layer with the fixed position background dots
+//    //Draw a thin, rectangle in front of the background to test
+//    //This would eventually be replaced by a fan, or colour blend
+//    //This is the aperture on the rear disc of the cassette
+//    //It should have the colour for the 'light' typically white
+//    masker.beginLayer();
+//    ofClear(0, 0, 0, 255); // clear the fbo
+//    ofSetColor(ofColor::white);
+//    ofRect(100, 300, 800, 25); // this should be centred & be in terms of the window size
+//    masker.endLayer();
+    
+    //Draw a gradient background to test
+    //This is the image on the rear disc of the cassette
+    //It should have the colour for the 'light' transmitted through it, typically white if transparent
     masker.beginLayer();
     ofClear(0, 0, 0, 255); // clear the fbo
-    ofSetColor(ofColor::white);
-    backFbo.draw(0, 0); // draw the fbo with the dots in
+    //Load an image to test with
+    testImage.loadImage("gradient.jpg");
+    testImage.draw(0.0, 0.0, width, height);
     masker.endLayer();
-
-    //Draw the mask of holes
-    masker.beginMask();
-    ofClear(0, 0, 0, 0);
-    ofSetColor(ofColor::white);
-
-    // set the rotation centre to mid-screen by translating the origin
-    ofPushMatrix();
-    {
-        ofTranslate(width / 2, height / 2); // translate origin
-        ofRotate(rotationAngle, 0, 0, 1); // rotate about origin Z-axis
-//        ofRotate(180, 1, 0, 0); // flip the fbo so it never completely aligns
-            ofPushMatrix(); // drop down a level to reset the origin
-            ofTranslate(-width / 2, -height / 2); // reset the origin
-            backFbo.draw(0 + offsetX, 0 + offsetY); // draw the fbo again, with an offset
-            ofPopMatrix();
-    }
-    ofPopMatrix();
     
+
+//    //Draw the layer with the fixed position background dots
+//    masker.beginLayer();
+//    ofClear(0, 0, 0, 255); // clear the fbo
+//    ofSetColor(ofColor::white);
+//    backFbo.draw(0, 0); // draw the fbo with the dots in
+//    masker.endLayer();
+    
+    
+    //Draw the mask of holes
+    masker.beginMask(); {
+        ofClear(0, 0, 0, 0);
+        ofSetColor(ofColor::white);
+
+        // set the rotation centre to mid-screen by translating the origin
+        ofPushMatrix();
+        {
+            ofTranslate(width / 2, height / 2); // translate origin
+            ofRotate(rotationAngle, 0, 0, 1); // rotate about origin Z-axis
+        // ofRotate(180, 1, 0, 0); // flip the fbo so it never completely aligns
+                ofPushMatrix(); // drop down a level to reset the origin
+                ofTranslate(-width / 2, -height / 2); // reset the origin
+                backFbo.draw(0 + offsetX, 0 + offsetY); // draw the fbo again, with an offset
+                ofPopMatrix();
+        }
+        ofPopMatrix(); }
     masker.endMask();
+
 
     //Draw the combined result
     masker.draw();
